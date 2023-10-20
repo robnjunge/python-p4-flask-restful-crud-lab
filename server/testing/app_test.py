@@ -8,6 +8,17 @@ class TestPlant:
 
     def test_plant_by_id_get_route(self):
         '''has a resource available at "/plants/<int:id>".'''
+        # Add a plant with ID 1 to the database
+        with app.app_context():
+            new_plant = Plant(
+                name="Aloe",
+                image="./images/aloe.jpg",
+                price=11.50,
+                is_in_stock=True,
+            )
+            db.session.add(new_plant)
+            db.session.commit()
+
         response = app.test_client().get('/plants/1')
         assert(response.status_code == 200)
 
